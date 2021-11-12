@@ -3,6 +3,8 @@ package hu.uni.miskolc.teszteles.levelezo.model;
 import hu.uni.miskolc.teszteles.levelezo.exceptions.GyartasiIdoNemMegfelelo;
 import hu.uni.miskolc.teszteles.levelezo.exceptions.IsmeretlenHengerurtartalomNev;
 import hu.uni.miskolc.teszteles.levelezo.exceptions.RendszamNemMegfelelo;
+import hu.uni.miskolc.teszteles.levelezo.exceptions.UresErtek;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,7 +17,7 @@ public class AutoTest {
     Auto auto;
 
     @Before
-    public void initAuto(){
+    public void initAuto() {
         auto = new Auto();
     }
 
@@ -23,6 +25,7 @@ public class AutoTest {
     public void testJoRendszam() throws RendszamNemMegfelelo {
         String rendszam = "AAA-123";
         auto.setRendszam(rendszam);
+        Assert.assertEquals(rendszam, auto.rendszam);
     }
 
     @Test(expected = RendszamNemMegfelelo.class)
@@ -33,9 +36,8 @@ public class AutoTest {
 
     @Test
     public void testGetterRendszam() throws RendszamNemMegfelelo {
-        String rendszam = "AAA-213";
-        auto.setRendszam(rendszam);
-        assertEquals(rendszam, auto.getRendszam());
+        auto.rendszam = "ABC-123";
+        assertEquals(auto.rendszam, auto.getRendszam());
     }
 
     @Test
@@ -61,5 +63,12 @@ public class AutoTest {
     public void testNemSzereploHengerurtartalom() throws IsmeretlenHengerurtartalomNev {
         String motorMeret = "0.5";
         auto.setHengerurtartalom(motorMeret);
+    }
+
+    @Test(expected = UresErtek.class)
+    public void testUresMarka() throws UresErtek {
+        Auto auto = new Auto();
+        auto.dudal();
+        auto.setMarka("");
     }
 }

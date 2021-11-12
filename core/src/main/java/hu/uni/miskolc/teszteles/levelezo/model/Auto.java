@@ -4,10 +4,13 @@ import hu.uni.miskolc.teszteles.levelezo.exceptions.GyartasiIdoNemMegfelelo;
 import hu.uni.miskolc.teszteles.levelezo.exceptions.IsmeretlenHengerurtartalomNev;
 import hu.uni.miskolc.teszteles.levelezo.exceptions.RendszamNemMegfelelo;
 import hu.uni.miskolc.teszteles.levelezo.exceptions.UresErtek;
+import hu.uni.miskolc.teszteles.levelezo.model.enums.Kivitel;
+import hu.uni.miskolc.teszteles.levelezo.model.enums.Uzemanyag;
 
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Auto implements HanggalRendelkezo {
 
@@ -138,5 +141,60 @@ public class Auto implements HanggalRendelkezo {
         }
         Integer ertek = hengerurtartalomErtekek.get(hengerurtartalom);
         this.hengerurtartalom = ertek.intValue();
+    }
+
+    public Auto(String rendszam, String marka, String modell, Kivitel kivitel,
+                String szinHexadecimalis, LocalDate gyartasiIdo,
+                Uzemanyag uzemanyag, int ajtokSzama, int futottKilometer,
+                boolean korozottE, int hengerurtartalom) throws
+            RendszamNemMegfelelo, GyartasiIdoNemMegfelelo, UresErtek {
+        setRendszam(rendszam);
+        setMarka(marka);
+        setModell(modell);
+        setKivitel(kivitel);
+        setSzinHexadecimalis(szinHexadecimalis);
+        setGyartasiIdo(gyartasiIdo);
+        setUzemanyag(uzemanyag);
+        setAjtokSzama(ajtokSzama);
+        setFutottKilometer(futottKilometer);
+        setKorozottE(korozottE);
+        setHengerurtartalom(hengerurtartalom);
+    }
+
+    public void setHengerurtartalom(int hengerurtartalom) {
+        this.hengerurtartalom = hengerurtartalom;
+    }
+
+    public Auto() {
+    }
+
+    @Override
+    public String toString() {
+        return "Auto{" +
+                "rendszam='" + rendszam + '\'' +
+                ", marka='" + marka + '\'' +
+                ", modell='" + modell + '\'' +
+                ", kivitel=" + kivitel +
+                ", szinHexadecimalis='" + szinHexadecimalis + '\'' +
+                ", gyartasiIdo=" + gyartasiIdo +
+                ", uzemanyag=" + uzemanyag +
+                ", ajtokSzama=" + ajtokSzama +
+                ", futottKilometer=" + futottKilometer +
+                ", korozottE=" + korozottE +
+                ", hengerurtartalom=" + hengerurtartalom +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Auto auto = (Auto) o;
+        return ajtokSzama == auto.ajtokSzama && futottKilometer == auto.futottKilometer && hengerurtartalom == auto.hengerurtartalom && Objects.equals(rendszam, auto.rendszam) && Objects.equals(marka, auto.marka) && Objects.equals(modell, auto.modell) && kivitel == auto.kivitel && Objects.equals(szinHexadecimalis, auto.szinHexadecimalis) && Objects.equals(gyartasiIdo, auto.gyartasiIdo) && uzemanyag == auto.uzemanyag;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(rendszam, marka, modell, kivitel, szinHexadecimalis, gyartasiIdo, uzemanyag, ajtokSzama, futottKilometer, korozottE, hengerurtartalom);
     }
 }
