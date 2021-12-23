@@ -11,4 +11,6 @@ public interface AutoDAO {
     public Auto readAutoById(String rendszam) throws AutoNemTalalhato;
 
     public void createAuto(Auto auto);
+
+    public void updateAuto(Auto auto) throws AutoNemTalalhato;
 }

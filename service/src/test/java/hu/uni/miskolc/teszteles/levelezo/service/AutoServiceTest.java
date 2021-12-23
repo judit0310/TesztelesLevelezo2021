@@ -92,6 +92,12 @@ public class AutoServiceTest {
         assertNotEquals(0, service.getKorozottAutok().size());
     }
 
+    @Test
+    public void testBenzinesAuto() {
+        assertEquals(2,
+                service.getAutokByUzemanyag(Uzemanyag.BENZIN).size());
+    }
+
     @Test(expected = InvalidParameterException.class)
     public void testRosszIntervallum() {
         service.getDatumKozottiAutok(LocalDate.now(),
@@ -128,8 +134,8 @@ public class AutoServiceTest {
         service.getAutoRendszamAlapjan("ZZZ-999");
     }
 
-    @Test
-    public void testRendszamMarFoglalt() throws RendszamNemMegfelelo, UresErtek, GyartasiIdoNemMegfelelo {
+    @Test(expected = RendszamMarFoglalt.class)
+    public void testRendszamMarFoglalt() throws RendszamNemMegfelelo, UresErtek, GyartasiIdoNemMegfelelo, RendszamMarFoglalt {
         Auto auto = new Auto("ABC-123", "Opel", "Astra",
                 Kivitel.KOMBI, "#ffffff",
                 LocalDate.of(2017, 5, 12)
@@ -139,7 +145,7 @@ public class AutoServiceTest {
     }
 
     @Test(expected = RendszamMarFoglalt.class)
-    public void testAutoRendszamMarFoglaltMasodjara() throws RendszamNemMegfelelo, UresErtek, GyartasiIdoNemMegfelelo, AutoNemTalalhato {
+    public void testAutoRendszamMarFoglaltMasodjara() throws RendszamNemMegfelelo, UresErtek, GyartasiIdoNemMegfelelo, AutoNemTalalhato, RendszamMarFoglalt {
         Auto auto = new Auto("ABC-777", "Opel", "Astra",
                 Kivitel.KOMBI, "#ffffff",
                 LocalDate.of(2017, 5, 12)
@@ -154,4 +160,6 @@ public class AutoServiceTest {
                 readAutoById(auto.getRendszam());
         service.addAuto(auto);
     }
+
+
 }

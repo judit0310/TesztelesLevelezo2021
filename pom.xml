@@ -4,19 +4,21 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.example</groupId>
+    <groupId>hu.uni.miskolc.teszteles.levelezo</groupId>
     <artifactId>TesztelesLevelezo2021</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>core</module>
         <module>service</module>
+        <module>dao-mongo</module>
     </modules>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <argLine>--add-modules java.base --add-opens java.base/jdk.internal.util=ALL-UNNAMED
+        <argLine>--add-modules java.base --add-opens
+            java.base/jdk.internal.util=ALL-UNNAMED
             --add-opens java.base/java.lang=ALL-UNNAMED --illegal-access=permit
         </argLine>
     </properties>

@@ -3,7 +3,9 @@ package hu.uni.miskolc.teszteles.levelezo.service;
 import hu.uni.miskolc.teszteles.levelezo.dao.AutoDAO;
 import hu.uni.miskolc.teszteles.levelezo.exceptions.RendszamNemMegfelelo;
 import hu.uni.miskolc.teszteles.levelezo.model.Auto;
+import hu.uni.miskolc.teszteles.levelezo.model.enums.Uzemanyag;
 import hu.uni.miskolc.teszteles.levelezo.service.exceptions.AutoNemTalalhato;
+import hu.uni.miskolc.teszteles.levelezo.service.exceptions.RendszamMarFoglalt;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.Predicate;
 
@@ -24,7 +26,12 @@ public class AutoService {
         return dao.readAutos();
     }
 
-    ;
+    public Collection<Auto> getAutokByUzemanyag(Uzemanyag uzemanyag){
+        Collection<Auto> valasztott;
+        Collection<Auto> osszesAuto = getAutok();
+        valasztott = osszesAuto.stream().filter(a -> a.getUzemanyag() == uzemanyag).collect(Collectors.toList());
+        return valasztott;
+    }
 
     public Collection<Auto> getKorozottAutok() {
         Collection<Auto> korozott;
@@ -50,11 +57,13 @@ public class AutoService {
         return dao.readAutoById(rendszam);
     }
 
-    public void addAuto(Auto auto) throws RendszamNemMegfelelo {
+    public void addAuto(Auto auto) throws RendszamNemMegfelelo, RendszamMarFoglalt {
         try {
             getAutoRendszamAlapjan(auto.getRendszam());
         } catch (AutoNemTalalhato e) {
             dao.createAuto(auto);
+            return;
         }
+        throw new RendszamMarFoglalt();
     }
 }
